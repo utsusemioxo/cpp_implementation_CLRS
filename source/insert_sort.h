@@ -2,6 +2,9 @@
 #include <functional>
 #include <iterator>
 
+namespace clrs {
+namespace sort {
+
 template <typename Iterator,
           typename CompareType =
               std::greater<typename std::iterator_traits<Iterator>::value_type>>
@@ -19,3 +22,6 @@ void insert_sort(const Iterator begin, const Iterator end,
     *(sorted_iter_end + 1) = key;
   }
 }
+
+} // namespace sort
+} // namespace clrs

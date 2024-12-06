@@ -3,6 +3,7 @@ project(CLRS_cpp_imp)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_BUILD_TYPE Debug)
 
 find_package(GTest REQUIRED)
 include_directories(${GTest_INCLUDE_DIRS})
@@ -18,17 +19,13 @@ set(BENCHMARK_SOURCES
     source/benchmark.cpp
 )
 
-add_executable(insertion_sort_tests ${TEST_SOURCES})
-target_link_libraries(insertion_sort_tests PRIVATE
+add_executable(tests ${TEST_SOURCES})
+target_link_libraries(tests PRIVATE
     GTest::GTest GTest::Main
 )
-add_test(NAME insertion_sort_tests 
-    COMMAND
-    insertion_sort_tests
-)
 
-add_executable(insertion_sort_benchmark ${BENCHMARK_SOURCES})
-target_link_libraries(insertion_sort_benchmark 
+add_executable(benchmark ${BENCHMARK_SOURCES})
+target_link_libraries(benchmark 
     PRIVATE
     benchmark::benchmark
 )
