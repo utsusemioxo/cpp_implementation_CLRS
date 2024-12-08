@@ -32,6 +32,7 @@ void merge(Iterator beg, Iterator mid, Iterator end,
 
   // start to merge
   while (iter != end) {
+    // be careful when comparing iterators!
     if (iter_l == arr_l.end() && iter_r != arr_r.end()) {
       *iter = *iter_r;
       iter_r++;

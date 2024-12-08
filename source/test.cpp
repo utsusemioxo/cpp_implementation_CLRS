@@ -1,4 +1,6 @@
 #include "insert_sort.h"
+#include "matrix.h"
+#include "matrix_multiply.h"
 #include "merge_sort.h"
 #include <gtest/gtest.h>
 #include <iterator>
@@ -119,4 +121,84 @@ TEST(test_merge_sort, test_std_container) {
   EXPECT_EQ(data2, comparedata2);
   EXPECT_EQ(data3, comparedata3);
   EXPECT_EQ(data4, comparedata4);
+}
+
+TEST(test_matrix, test_element_access) {
+  clrs::matrix::Mat<int> mat(3, 4, 0);
+  mat(0, 0) = 1;
+  mat(0, 1) = 2;
+  mat(0, 2) = 3;
+  mat(0, 3) = 4;
+  mat(1, 0) = 5;
+  mat(1, 1) = 6;
+  mat(1, 2) = 7;
+  mat(1, 3) = 8;
+  mat(2, 0) = 9;
+  mat(2, 1) = 10;
+  mat(2, 2) = 11;
+  mat(2, 3) = 12;
+  EXPECT_EQ(mat(0, 0), 1);
+  EXPECT_EQ(mat(0, 1), 2);
+  EXPECT_EQ(mat(0, 2), 3);
+  EXPECT_EQ(mat(0, 3), 4);
+  EXPECT_EQ(mat(1, 0), 5);
+  EXPECT_EQ(mat(1, 1), 6);
+  EXPECT_EQ(mat(1, 2), 7);
+  EXPECT_EQ(mat(1, 3), 8);
+  EXPECT_EQ(mat(2, 0), 9);
+  EXPECT_EQ(mat(2, 1), 10);
+  EXPECT_EQ(mat(2, 2), 11);
+  EXPECT_EQ(mat(2, 3), 12);
+}
+
+TEST(test_matrix, test_sub_matrix) {
+  clrs::matrix::Mat<int> mat(3, 4, 0);
+  mat(0, 0) = 1;
+  mat(0, 1) = 2;
+  mat(0, 2) = 3;
+  mat(0, 3) = 4;
+  mat(1, 0) = 5;
+  mat(1, 1) = 6;
+  mat(1, 2) = 7;
+  mat(1, 3) = 8;
+  mat(2, 0) = 9;
+  mat(2, 1) = 10;
+  mat(2, 2) = 11;
+  mat(2, 3) = 12;
+  // std::cout << "Mat:\n";
+  // std::cout << mat;
+  clrs::matrix::Mat<int> sub_0_0_2_3_gt(2, 3, 0);
+  sub_0_0_2_3_gt(0, 0) = 1;
+  sub_0_0_2_3_gt(0, 1) = 2;
+  sub_0_0_2_3_gt(0, 2) = 3;
+  sub_0_0_2_3_gt(1, 0) = 5;
+  sub_0_0_2_3_gt(1, 1) = 6;
+  sub_0_0_2_3_gt(1, 2) = 7;
+  // std::cout << "sub_0_0_1_2_gt:\n";
+  // std::cout << sub_0_0_1_2_gt;
+  clrs::matrix::Mat<int> sub_0_0_2_3(mat, 0, 0, 2, 3);
+  // std::cout << "sub_0_0_1_2:\n";
+  // std::cout << sub_0_0_1_2;
+  EXPECT_EQ(sub_0_0_2_3, sub_0_0_2_3_gt);
+}
+
+TEST(test_matrix_multiply, test_brut_force) {
+  clrs::matrix::Mat<int> A(2, 2, 0);
+  A(0, 0) = 1;
+  A(0, 1) = 2;
+  A(1, 0) = 3;
+  A(1, 1) = 4;
+  clrs::matrix::Mat<int> B(2, 2, 0);
+  B(0, 0) = 1;
+  B(0, 1) = 2;
+  B(1, 0) = 3;
+  B(1, 1) = 4;
+  clrs::matrix::Mat<int> C(2, 2, 0);
+  clrs::op::matrix_multiply(A, B, C, 2);
+  clrs::matrix::Mat<int> C_gt(2, 2, 0);
+  C_gt(0, 0) = 7;
+  C_gt(0, 1) = 10;
+  C_gt(1, 0) = 15;
+  C_gt(1, 1) = 22;
+  EXPECT_EQ(C, C_gt);
 }
