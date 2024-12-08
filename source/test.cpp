@@ -202,3 +202,24 @@ TEST(test_matrix_multiply, test_brut_force) {
   C_gt(1, 1) = 22;
   EXPECT_EQ(C, C_gt);
 }
+
+TEST(test_matrix_multiply, test_divide_conquer) {
+  clrs::matrix::Mat<int> A(2, 2, 0);
+  A(0, 0) = 1;
+  A(0, 1) = 2;
+  A(1, 0) = 3;
+  A(1, 1) = 4;
+  clrs::matrix::Mat<int> B(2, 2, 0);
+  B(0, 0) = 1;
+  B(0, 1) = 2;
+  B(1, 0) = 3;
+  B(1, 1) = 4;
+  clrs::matrix::Mat<int> C(2, 2, 0);
+  clrs::op::matrix_multiply_recursive(A, 0, 0, B, 0, 0, C, 0, 0, 2);
+  clrs::matrix::Mat<int> C_gt(2, 2, 0);
+  C_gt(0, 0) = 7;
+  C_gt(0, 1) = 10;
+  C_gt(1, 0) = 15;
+  C_gt(1, 1) = 22;
+  EXPECT_EQ(C, C_gt);
+}
