@@ -1,3 +1,4 @@
+#include "heap.h"
 #include "insert_sort.h"
 #include "matrix.h"
 #include "matrix_multiply.h"
@@ -222,4 +223,10 @@ TEST(test_matrix_multiply, test_divide_conquer) {
   C_gt(1, 0) = 15;
   C_gt(1, 1) = 22;
   EXPECT_EQ(C, C_gt);
+}
+
+TEST(test_heap, test_max_heapify) {
+  std::vector<int> vec = {16, 4, 10, 14, 7, 9, 3, 2, 8, 1};
+  // std::vector<int> vec = {1, 2, 3};
+  clrs::ds::MaxHeap<int> max_heap(vec);
 }
