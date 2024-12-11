@@ -1,15 +1,18 @@
 #pragma once
 #include <iomanip>
+#include <iterator>
 #include <ostream>
 #include <vector>
 #include <iostream>
 
 namespace clrs {
-namespace ds {
+namespace sort {
 
-template <typename T> class MaxHeap {
+template <typename Iterator, typename CompareType=std::less<typename std::iterator_traits<Iterator>::value_type>>
+class sort_heap {
 public:
-  std::vector<T> data;
+  Iterator m_heap_root;
+  std::size_t m_heap_size;
 
 public:
   /*
@@ -23,78 +26,54 @@ public:
    * 7 8 9
    * size = 10, leaves: 5~9, non-leaves: 0~4
    */
-  explicit MaxHeap(const std::vector<T> &elements) : data(elements) {
+  explicit sort_heap(Iterator iter, std::size_t heap_size) : m_heap_root(iter), m_heap_size(heap_size) {
     build_max_heap();
     print_max_heap();
   }
-  int parent(int i) { return std::floor((i - 1.0) / 2); }
-  int left(int i) const { return 2 * i + 1; }
-  int right(int i) const { return 2 * i + 2; }
+  int parent(std::size_t index) { return (index - 1) >> 1; }
+  int left(std::size_t index) const { return (index << 1) + 1; }
+  int right(std::size_t index) const { return (index << 1) + 2; }
 
-  int max_non_leaf() const { return std::floor(size() / 2.0) - 1; }
-
-  int size() const { return data.size(); }
+  // int max_non_leaf() const { return std::floor(size() / 2.0) - 1; }
 
   void print_max_heap() const {
-    for (int i = 0; i <= max_non_leaf(); i++) {
-      std::cout << data[i];
-      std::cout << " left:" << data[left(i)];
-      std::cout << " right:" << data[right(i)];
-      std::cout << std::endl;
-    }
+    // for (int i = 0; i <= max_non_leaf(); i++) {
+    //   std::cout << data[i];
+    //   std::cout << " left:" << data[left(i)];
+    //   std::cout << " right:" << data[right(i)];
+    //   std::cout << std::endl;
+    // }
   }
 
-  void max_heapify(int i) {
-    int l = left(i);
-    int r = right(i);
-    int largest = i;
-    if (l < this->size() && data[l] > data[i]) {
+  void heapify(std::size_t index) {
+    int l = left(index);
+    int r = right(index);
+    int largest = index;
+    if (l < m_heap_size && *(m_heap_root + l) > *(m_heap_root + index)) {
       largest = l;
     } else {
-      largest = i;
+      largest = index;
     }
-    if (r < this->size() && data[r] > data[largest]) {
+    if (r < m_heap_size && *(m_heap_root + r) > *(m_heap_root + largest)) {
       largest = r;
     }
-    if (largest != i) {
+    if (largest != index) {
       // exchange A[i] with A[largest]
-      T elem = data[i];
-      data[i] = data[largest];
-      data[largest] = elem;
+      std::swap(*(m_heap_root + index), *(m_heap_root + largest));
       // recursive call
-      max_heapify(largest);
+      heapify(largest);
     }
   }
 
   void build_max_heap() {
-    int size = data.size();
-    if (size == 1)
-      return;
-    for (int i = max_non_leaf(); i >= 0; i--) {
-      max_heapify(i);
-    }
+    // int size = data.size();
+    // if (size == 1)
+    //   return;
+    // for (int i = max_non_leaf(); i >= 0; i--) {
+    //   max_heapify(i);
+    // }
   }
 
-  template <typename U>
-  friend std::ostream &operator<<(std::ostream &os, const MaxHeap<U> &max_heap);
 };
-
-template <typename U>
-std::ostream &operator<<(std::ostream &os, const MaxHeap<U> &max_heap) {
-  os << "\n";
-  int levels = std::ceil(std::log2(max_heap.size()) + 1);
-  std::cout << "levels=" << levels << std::endl;
-  int width = std::pow(2, levels) * 2;
-  for (int i = 0, level = 0; i < max_heap.size(); level++) {
-    int nodes = std::pow(2, level);
-    int space = width / (nodes + 1);
-
-    for (int j = 0; j < nodes && i < max_heap.size(); j++, i++) {
-      os << std::setw(space) << max_heap.data[i];
-    }
-  }
-  os << std::endl;
-  return os;
-}
-} // namespace ds
+} // namespace sort
 } // namespace clrs
