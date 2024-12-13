@@ -26,15 +26,13 @@ public:
    * 7 8 9
    * size = 10, leaves: 5~9, non-leaves: 0~4
    */
-  explicit sort_heap(Iterator iter, std::size_t heap_size) : m_heap_root(iter), m_heap_size(heap_size) {
-    build_max_heap();
-    print_max_heap();
-  }
+  // explicit sort_heap(Iterator iter, std::size_t heap_size) : m_heap_root(iter), m_heap_size(heap_size) {
+  //   build_max_heap();
+  //   print_max_heap();
+  // }
   int parent(std::size_t index) { return (index - 1) >> 1; }
   int left(std::size_t index) const { return (index << 1) + 1; }
   int right(std::size_t index) const { return (index << 1) + 2; }
-
-  // int max_non_leaf() const { return std::floor(size() / 2.0) - 1; }
 
   void print_max_heap() const {
     // for (int i = 0; i <= max_non_leaf(); i++) {
@@ -65,13 +63,21 @@ public:
     }
   }
 
-  void build_max_heap() {
-    // int size = data.size();
-    // if (size == 1)
-    //   return;
-    // for (int i = max_non_leaf(); i >= 0; i--) {
-    //   max_heapify(i);
-    // }
+  void build_max_heap(Iterator begin, Iterator end) {
+    m_heap_root = begin;
+    m_heap_size = std::distance(begin, end);
+    for (int i  = (m_heap_size >> 1) - 1; i >= 0; i--) {
+      heapify(i);
+    }
+  }
+
+  void operator()(Iterator begin, Iterator end) {
+    build_max_heap(begin, end);
+    for (size_t i = m_heap_size - 1; i >= 1; i--) {
+      std::swap(*(begin + i), *begin);
+      m_heap_size--;
+      heapify(0);
+    }
   }
 
 };

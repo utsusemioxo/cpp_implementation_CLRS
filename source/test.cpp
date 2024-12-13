@@ -227,6 +227,13 @@ TEST(test_matrix_multiply, test_divide_conquer) {
 
 TEST(test_heap, test_max_heapify) {
   std::vector<int> vec = {16, 4, 10, 14, 7, 9, 3, 2, 8, 1};
+  std::vector<int> gt_vec = {1, 2, 3, 4, 7, 8, 9, 10, 14, 16};
   // std::vector<int> vec = {1, 2, 3};
-  clrs::ds::MaxHeap<int> max_heap(vec);
+  clrs::sort::sort_heap<std::vector<int>::iterator> sorter;
+  sorter(vec.begin(), vec.end());
+  // for (auto elem : vec) {
+  //   std::cout << elem << " ";
+  // }
+  // std::cout << std::endl;
+  EXPECT_EQ(vec, gt_vec);
 }
