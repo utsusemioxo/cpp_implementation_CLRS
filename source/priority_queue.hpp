@@ -1,4 +1,6 @@
 #pragma once
+#include <limits>
+#include <utility>
 #include <vector>
 #include <iostream>
 
@@ -8,22 +10,56 @@ namespace ds {
 template <typename T> class priority_queue {
   private:
   std::vector<T> m_data;
-  std::size_t m_heap_size;
+  std::size_t m_heap_size{0};
   public:
-  T top_priority() {
+  T max_heap_maximum() {
     if (m_heap_size < 1) {
-      std::cout << "heap overflow" << std::endl;
+      std::cerr << "heap underflow" << std::endl;
     }
-    T ret = m_data[1];
+    T ret = m_data[0];
     return ret;
   }
 
-  T extract_top_priority() {
-    T top_priority_elem = top_priority();
+  T max_heap_extract_max() {
+    T top_priority_elem = max_heap_maximum();
     m_data[0] = m_data[m_heap_size - 1];
     m_heap_size -= 1;
     heapify(0);
+    // for (int i = 0; i < (m_heap_size >> 1); i++) {
+    //   std::cout << "\n" << m_data[i] << "\n";
+    //   std::cout << "\tleft: " << m_data[left(i)] << "\n";
+    //   std::cout << "\tright: " << m_data[right(i)] << "\n";
+    // }
     return top_priority_elem;
+  }
+
+  void max_heap_insert(T elem) {
+    m_heap_size += 1;
+    if (m_data.size() == m_heap_size) {
+      // no room for new element
+      std::cerr << "heap overflow" << std::endl;
+      return;
+    }
+    m_data.push_back(elem);
+    if (m_heap_size == 1)
+      return;
+
+    T k = elem;
+    *(m_data.begin() + m_heap_size - 1) = std::numeric_limits<T>::min();
+    max_heap_increase_key(m_heap_size - 1, k);
+  }
+
+  
+  void max_heap_increase_key(std::size_t index, T k) {
+    if (k < *(m_data.begin() + index)) {
+      std::cerr << "new key is smaller than current key" << std::endl;
+    }
+    *(m_data.begin() + index) = k;
+
+    while (index > 0 && m_data[parent(index)] <= m_data[index]) {
+      std::swap(m_data[parent(index)], m_data[index]);
+      index = parent(index);
+    }
   }
 
   int parent(std::size_t index) { return (index - 1) >> 1; }
@@ -47,5 +83,6 @@ template <typename T> class priority_queue {
     }
   }
 };
+
 } // namespace ds
 } // namespace clrs

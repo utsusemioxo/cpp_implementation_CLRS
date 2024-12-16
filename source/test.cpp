@@ -3,8 +3,10 @@
 #include "matrix.h"
 #include "matrix_multiply.h"
 #include "merge_sort.h"
+#include "priority_queue.hpp"
 #include <gtest/gtest.h>
 #include <iterator>
+#include <queue>
 #include <vector>
 
 using namespace clrs::sort;
@@ -236,4 +238,28 @@ TEST(test_heap, test_max_heapify) {
   // }
   // std::cout << std::endl;
   EXPECT_EQ(vec, gt_vec);
+}
+
+TEST(test_priority_queue, test_max_priority_queue) {
+  clrs::ds::priority_queue<int> priority_queue;
+  priority_queue.max_heap_insert(1);
+  priority_queue.max_heap_insert(4);
+  priority_queue.max_heap_insert(2);
+  priority_queue.max_heap_insert(3);
+  priority_queue.max_heap_insert(9);
+  priority_queue.max_heap_insert(7);
+  priority_queue.max_heap_insert(8);
+  priority_queue.max_heap_insert(10);
+  priority_queue.max_heap_insert(14);
+  priority_queue.max_heap_insert(16);
+  EXPECT_EQ(priority_queue.max_heap_extract_max(), 16);
+  EXPECT_EQ(priority_queue.max_heap_extract_max(), 14);
+  EXPECT_EQ(priority_queue.max_heap_extract_max(), 10);
+  EXPECT_EQ(priority_queue.max_heap_extract_max(), 9);
+  EXPECT_EQ(priority_queue.max_heap_extract_max(), 8);
+  EXPECT_EQ(priority_queue.max_heap_extract_max(), 7);
+  EXPECT_EQ(priority_queue.max_heap_extract_max(), 4);
+  EXPECT_EQ(priority_queue.max_heap_extract_max(), 3);
+  EXPECT_EQ(priority_queue.max_heap_extract_max(), 2);
+  EXPECT_EQ(priority_queue.max_heap_extract_max(), 1);
 }
