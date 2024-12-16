@@ -15,6 +15,16 @@ public:
   std::size_t m_heap_size;
 
 public:
+  void operator()(Iterator begin, Iterator end) {
+    build_max_heap(begin, end);
+    for (size_t i = m_heap_size - 1; i >= 1; i--) {
+      std::swap(*(begin + i), *begin);
+      m_heap_size--;
+      heapify(0);
+    }
+  }
+
+private:
   /*
    * Index example: 0~9 is heap element index, not value of key
    *       0
@@ -26,10 +36,6 @@ public:
    * 7 8 9
    * size = 10, leaves: 5~9, non-leaves: 0~4
    */
-  // explicit sort_heap(Iterator iter, std::size_t heap_size) : m_heap_root(iter), m_heap_size(heap_size) {
-  //   build_max_heap();
-  //   print_max_heap();
-  // }
   int parent(std::size_t index) { return (index - 1) >> 1; }
   int left(std::size_t index) const { return (index << 1) + 1; }
   int right(std::size_t index) const { return (index << 1) + 2; }
@@ -68,15 +74,6 @@ public:
     m_heap_size = std::distance(begin, end);
     for (int i  = (m_heap_size >> 1) - 1; i >= 0; i--) {
       heapify(i);
-    }
-  }
-
-  void operator()(Iterator begin, Iterator end) {
-    build_max_heap(begin, end);
-    for (size_t i = m_heap_size - 1; i >= 1; i--) {
-      std::swap(*(begin + i), *begin);
-      m_heap_size--;
-      heapify(0);
     }
   }
 

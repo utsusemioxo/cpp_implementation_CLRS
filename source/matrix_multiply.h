@@ -13,8 +13,8 @@ namespace op {
  * @param n col and row size
  */
 template <typename T>
-void matrix_multiply(const matrix::Mat<T> &A, const matrix::Mat<T> &B,
-                     matrix::Mat<T> &C, size_t n) {
+void matrix_multiply(const ds::Mat<T> &A, const ds::Mat<T> &B,
+                     ds::Mat<T> &C, size_t n) {
   for (size_t i = 0; i < n; ++i) {
     for (size_t j = 0; j < n; ++j) {
       for (size_t k = 0; k < n; ++k) {
@@ -40,9 +40,9 @@ void matrix_multiply(const matrix::Mat<T> &A, const matrix::Mat<T> &B,
  * @param n is power of 2, when n = 1, do scalar multiply
  */
 template <typename T>
-void matrix_multiply_recursive(const matrix::Mat<T> &A, size_t row_A,
-                               size_t col_A, const matrix::Mat<T> &B,
-                               size_t row_B, size_t col_B, matrix::Mat<T> &C,
+void matrix_multiply_recursive(const ds::Mat<T> &A, size_t row_A,
+                               size_t col_A, const ds::Mat<T> &B,
+                               size_t row_B, size_t col_B, ds::Mat<T> &C,
                                size_t row_C, size_t col_C, size_t n) {
   // 1x1 matrix
   if (n == 1) {

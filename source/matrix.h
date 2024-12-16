@@ -4,7 +4,7 @@
 #include <vector>
 
 namespace clrs {
-namespace matrix {
+namespace ds{
 // a simple dense matrix implmentation
 template <typename T> class Mat {
 private:
@@ -98,5 +98,5 @@ std::ostream &operator<<(std::ostream &os, const Mat<U> &matrix) {
   return os;
 }
 
-} // namespace matrix
+} // namespace ds
 } // namespace clrs

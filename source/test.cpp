@@ -125,7 +125,7 @@ TEST(test_merge_sort, test_std_container) {
 }
 
 TEST(test_matrix, test_element_access) {
-  clrs::matrix::Mat<int> mat(3, 4, 0);
+  clrs::ds::Mat<int> mat(3, 4, 0);
   mat(0, 0) = 1;
   mat(0, 1) = 2;
   mat(0, 2) = 3;
@@ -153,7 +153,7 @@ TEST(test_matrix, test_element_access) {
 }
 
 TEST(test_matrix, test_sub_matrix) {
-  clrs::matrix::Mat<int> mat(3, 4, 0);
+  clrs::ds::Mat<int> mat(3, 4, 0);
   mat(0, 0) = 1;
   mat(0, 1) = 2;
   mat(0, 2) = 3;
@@ -168,7 +168,7 @@ TEST(test_matrix, test_sub_matrix) {
   mat(2, 3) = 12;
   // std::cout << "Mat:\n";
   // std::cout << mat;
-  clrs::matrix::Mat<int> sub_0_0_2_3_gt(2, 3, 0);
+  clrs::ds::Mat<int> sub_0_0_2_3_gt(2, 3, 0);
   sub_0_0_2_3_gt(0, 0) = 1;
   sub_0_0_2_3_gt(0, 1) = 2;
   sub_0_0_2_3_gt(0, 2) = 3;
@@ -177,26 +177,26 @@ TEST(test_matrix, test_sub_matrix) {
   sub_0_0_2_3_gt(1, 2) = 7;
   // std::cout << "sub_0_0_1_2_gt:\n";
   // std::cout << sub_0_0_1_2_gt;
-  clrs::matrix::Mat<int> sub_0_0_2_3(mat, 0, 0, 2, 3);
+  clrs::ds::Mat<int> sub_0_0_2_3(mat, 0, 0, 2, 3);
   // std::cout << "sub_0_0_1_2:\n";
   // std::cout << sub_0_0_1_2;
   EXPECT_EQ(sub_0_0_2_3, sub_0_0_2_3_gt);
 }
 
 TEST(test_matrix_multiply, test_brut_force) {
-  clrs::matrix::Mat<int> A(2, 2, 0);
+  clrs::ds::Mat<int> A(2, 2, 0);
   A(0, 0) = 1;
   A(0, 1) = 2;
   A(1, 0) = 3;
   A(1, 1) = 4;
-  clrs::matrix::Mat<int> B(2, 2, 0);
+  clrs::ds::Mat<int> B(2, 2, 0);
   B(0, 0) = 1;
   B(0, 1) = 2;
   B(1, 0) = 3;
   B(1, 1) = 4;
-  clrs::matrix::Mat<int> C(2, 2, 0);
+  clrs::ds::Mat<int> C(2, 2, 0);
   clrs::op::matrix_multiply(A, B, C, 2);
-  clrs::matrix::Mat<int> C_gt(2, 2, 0);
+  clrs::ds::Mat<int> C_gt(2, 2, 0);
   C_gt(0, 0) = 7;
   C_gt(0, 1) = 10;
   C_gt(1, 0) = 15;
@@ -205,19 +205,19 @@ TEST(test_matrix_multiply, test_brut_force) {
 }
 
 TEST(test_matrix_multiply, test_divide_conquer) {
-  clrs::matrix::Mat<int> A(2, 2, 0);
+  clrs::ds::Mat<int> A(2, 2, 0);
   A(0, 0) = 1;
   A(0, 1) = 2;
   A(1, 0) = 3;
   A(1, 1) = 4;
-  clrs::matrix::Mat<int> B(2, 2, 0);
+  clrs::ds::Mat<int> B(2, 2, 0);
   B(0, 0) = 1;
   B(0, 1) = 2;
   B(1, 0) = 3;
   B(1, 1) = 4;
-  clrs::matrix::Mat<int> C(2, 2, 0);
+  clrs::ds::Mat<int> C(2, 2, 0);
   clrs::op::matrix_multiply_recursive(A, 0, 0, B, 0, 0, C, 0, 0, 2);
-  clrs::matrix::Mat<int> C_gt(2, 2, 0);
+  clrs::ds::Mat<int> C_gt(2, 2, 0);
   C_gt(0, 0) = 7;
   C_gt(0, 1) = 10;
   C_gt(1, 0) = 15;
