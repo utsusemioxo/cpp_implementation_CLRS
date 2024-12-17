@@ -4,6 +4,7 @@
 #include "matrix_multiply.h"
 #include "merge_sort.h"
 #include "priority_queue.hpp"
+#include "quick_sort.hpp"
 #include <gtest/gtest.h>
 #include <iterator>
 #include <queue>
@@ -262,4 +263,11 @@ TEST(test_priority_queue, test_max_priority_queue) {
   EXPECT_EQ(priority_queue.max_heap_extract_max(), 3);
   EXPECT_EQ(priority_queue.max_heap_extract_max(), 2);
   EXPECT_EQ(priority_queue.max_heap_extract_max(), 1);
+}
+
+TEST(test_quick_sort, test_quick_sort_partition) {
+  std::vector<int> vec = {2, 8, 7, 1, 3, 5, 6, 4};
+  clrs::sort::partition(vec.begin(), vec.end());
+  std::vector<int> gt = {2, 1, 3, 4, 7, 5, 6, 8};
+  EXPECT_EQ(vec, gt);
 }
