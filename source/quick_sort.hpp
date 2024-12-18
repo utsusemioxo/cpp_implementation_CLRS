@@ -1,7 +1,6 @@
 #pragma once
 #include <functional>
 #include <iterator>
-#include <iostream>
 namespace clrs {
 namespace sort {
 
@@ -13,7 +12,7 @@ Iterator partition(Iterator begin, Iterator end, CompareType compare = CompareTy
   Iterator r = end - 1;
   ValueType pivot_element = *r; // use last element as pivot
   // compare elements in [begin, end - 2] with pivot_element
-  for(;j != r - 1;j++) {
+  for(;j != r;j++) {
     if (compare(*j , pivot_element)) {
       i = i + 1;
       std::swap(*i, *j);
@@ -25,10 +24,6 @@ Iterator partition(Iterator begin, Iterator end, CompareType compare = CompareTy
 
 template<typename Iterator, typename CompareType = std::less<typename std::iterator_traits<Iterator>::value_type>>
 void quick_sort(Iterator begin, Iterator end, CompareType compare = CompareType{}) {
-  for (auto it = begin; it != end; it++) {
-    std::cout << *it << " ";
-  }
-  std::cout << std::endl;
   if (std::distance(begin, end) > 1) {
     Iterator q = partition(begin, end);
     quick_sort(begin, q);
