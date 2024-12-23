@@ -1,3 +1,4 @@
+#include "count_sort.h"
 #include "heap.h"
 #include "insert_sort.h"
 #include "matrix.h"
@@ -304,5 +305,37 @@ TEST(test_quick_sort, test_quick_sort_sort3) {
   std::vector<int> vec = {10, 10, 10, 10, 10, 5, 5, 5, 5, 5};
   clrs::sort::quick_sort(vec.begin(), vec.end());
   std::vector<int> gt = {5, 5, 5, 5, 5, 10, 10, 10, 10, 10};
+  EXPECT_EQ(vec, gt);
+}
+
+TEST(test_count_sort, test_vector1) {
+  std::vector<int> vec = {10, 10, 10, 10, 10, 5, 5, 5, 5, 5};
+  clrs::sort::count_sort sort;
+  sort(vec.begin(), vec.end());
+  std::vector<int> gt = {5, 5, 5, 5, 5, 10, 10, 10, 10, 10};
+  EXPECT_EQ(vec, gt);
+}
+
+TEST(test_count_sort, test_vector2) {
+  std::vector<int> vec = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+  clrs::sort::count_sort sort;
+  sort(vec.begin(), vec.end());
+  std::vector<int> gt = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  EXPECT_EQ(vec, gt);
+}
+
+TEST(test_count_sort, test_vector3) {
+  std::vector<int> vec = {2, 8, 7, 1, 3, 5, 6, 4};
+  clrs::sort::count_sort sort;
+  sort(vec.begin(), vec.end());
+  std::vector<int> gt = {1, 2, 3, 4, 5, 6, 7, 8};
+  EXPECT_EQ(vec, gt);
+}
+
+TEST(test_count_sort, test_vector4) {
+  std::vector<int> vec = {2, 5, 3, 0, 2, 3, 0, 3};
+  clrs::sort::count_sort sort;
+  sort(vec.begin(), vec.end());
+  std::vector<int> gt = {0, 0, 2, 2, 3, 3, 3, 5};
   EXPECT_EQ(vec, gt);
 }
